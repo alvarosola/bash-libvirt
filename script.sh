@@ -5,6 +5,7 @@
 MIN=20
 bucle='start'
 
+echo Cuando quieras puedes estresar la maquina mv1
 #Recogemos la memoria RAM con el comando free
 while [ $bucle != 'stop' ]; do
 	FREE=`ssh mv1@192.168.100.59 free -m | grep Mem | awk '{print $7}'`
@@ -43,7 +44,7 @@ while [ $bucle != 'stop' ]; do
 	fi
 done
 #Segunda parte
-		echo Cuando quieras puedes estresar la maquina mv2
+echo Cuando quieras puedes estresar la maquina mv2
 #Variable para indicar número minimo MB libres
 MIN2=20
 bucle2='start'
@@ -55,7 +56,7 @@ while [ $bucle2 != 'stop' ]; do
 #Redimensionando memoria RAM
                 echo Ampliando memoria RAM...
                 virsh setmem mv2 2G --live
-                bucle='stop'
+                bucle2='stop'
         fi
 done
 echo Memoria RAM ampliada.
