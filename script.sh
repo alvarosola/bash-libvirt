@@ -30,6 +30,10 @@ while [ $bucle != 'stop' ]; do
 		echo Montando el volumen...
 		ssh mv2@192.168.100.54 sudo mount /dev/vdb /var/www/html
 		echo Volumen montado.
+#Quitar regla de iptable para redireccionar el purto 80 a mv1
+		echo Quitando regla de iptable...
+		iptables -t nat -D PREROUTING 1
+		echo Regla de iptable quitada.
 #Añadir regla de iptable para redireccionar el puerto 80 a mv2
 		echo Añadiendo regla iptble...
 		iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination 192.168.100.54:80
@@ -39,6 +43,7 @@ while [ $bucle != 'stop' ]; do
 	fi
 done
 #Segunda parte
+		echo Cuando quieras puedes estresar la maquina mv2
 #Variable para indicar número minimo MB libres
 MIN2=20
 bucle2='start'
@@ -50,8 +55,8 @@ while [ $bucle2 != 'stop' ]; do
 #Redimensionando memoria RAM
                 echo Ampliando memoria RAM...
                 virsh setmem mv2 2G --live
-                echo Memoria RAM ampliada.
                 bucle='stop'
         fi
 done
+echo Memoria RAM ampliada.
 
